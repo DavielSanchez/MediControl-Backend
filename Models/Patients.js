@@ -1,16 +1,16 @@
 const { default: mongoose, Schema } = require("mongoose");
-const bcrypt = require('bcryptjs');
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const patientSchema = new mongoose.Schema({
-    nombres: { type: String, },
-    apellidos: { type: String, },
-    segundoNombre: { type: String },
-    fechaNacimiento: { type: Date, },
+    nombres: { type: String, required: true },
+    apellidos: { type: String, required: true },
+    fechaNacimiento: { type: Date, required: true },
     genero: { type: String, enum: ['masculino', 'femenino'], },
+    documentoIdentidad: { type: String, unique: true },
     estadoCivil: { type: String, enum: ['soltero', 'casado', 'divorciado', 'viudo'], default: 'soltero' },
     contacto: {
         telefono: { type: String, },
-        correo: { type: String, , unique: true },
+        correo: { type: String },
         direccion: {
             calle: { type: String, },
             ciudad: { type: String, },
@@ -53,13 +53,18 @@ const patientSchema = new mongoose.Schema({
         }, ],
     }, ],
     estado: { type: String, enum: ['activo', 'inactivo', 'fallecido'], default: 'activo' },
+    creadoPor: [{
+        nombre: { type: String },
+        rol: { type: String },
+    }],
     creadoEn: { type: Date, default: Date.now },
     actualizadoEn: { type: Date, default: Date.now },
 });
 
-PacienteSchema.pre('save', function(next) {
+patientSchema.pre('save', function(next) {
     this.actualizadoEn = Date.now();
     next();
 });
 
+patientSchema.plugin(mongoosePaginate)
 module.exports = mongoose.model('Patient', patientSchema, 'Patient');

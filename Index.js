@@ -8,8 +8,11 @@ const cors = require('cors')
 // const Categories = require('./Endpoints/Categories')
 // const Products = require('./Endpoints/Products')
 // const Reviews = require('./Endpoints/Reviews')
-const Users = require('./Endpoints/User')
 const Login = require('./Endpoints/Login')
+const Users = require('./Endpoints/User')
+const Pacientes = require('./Endpoints/Patients')
+const Medicos = require('./Endpoints/Medicos')
+const Counter = require('./EndPoints/Counter')
     // const ShoppingCart = require('./Endpoints/ShoppingCart')
     //     ////////////////////
 
@@ -31,12 +34,11 @@ app.use(cors())
     //     methods: ['GET', 'POST'],
     // }));
 app.use(express.json())
-    // app.use('/', Categories)
-    // app.use('/', Products)
-    // app.use('/', Reviews)
 app.use('/', Users)
 app.use('/', Login)
-    // app.use('/', ShoppingCart)
+app.use('/', Pacientes)
+app.use('/', Medicos)
+app.use('/', Counter)
 
 // ////////////////
 
@@ -45,6 +47,7 @@ app.get('/', (req, res) => {
         response: 'success'
     })
 })
+
 
 app.listen(process.env.PORT, () => {
     console.log(`App corriendo en http://localhost:${process.env.PORT}`);

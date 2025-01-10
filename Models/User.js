@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     userPassword: { type: String, required: true },
     name: { type: String, required: true },
     role: { type: String, enum: ['administrador', 'asistente', 'medico', 'laboratorista'], required: true },
-    userAccountStatus: { type: String, enum: ['activo', 'suspendido', 'pendiente'], default: 'activo' },
+    userAccountStatus: { type: String, enum: ['activo', 'suspendido'], default: 'activo' },
     lastLogin: { type: Date, required: false },
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now }

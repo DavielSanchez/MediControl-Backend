@@ -21,6 +21,9 @@ router.post('/login', async(req, res) => {
             return res.status(401).json({ message: 'Usuario no encontrado' });
 
         }
+        if (user.userAccountStatus == 'suspendido') {
+            return res.status(401).json({ message: 'Acceso denegado' });
+        }
 
         // Verificar contraseña
         const isPasswordValid = await bcrypt.compare(userPassword, user.userPassword); // Método definido en el modelo
